@@ -1,15 +1,17 @@
-package com.example.movieapp;
+package com.example.movieapp.Activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.material.button.MaterialButton;
+import com.example.movieapp.DatabaseHelper;
+import com.example.movieapp.InputValidation;
+import com.example.movieapp.R;
+import com.example.movieapp.User;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;

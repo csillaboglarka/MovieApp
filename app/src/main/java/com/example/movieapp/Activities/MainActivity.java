@@ -1,17 +1,20 @@
-package com.example.movieapp;
+package com.example.movieapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.movieapp.DatabaseHelper;
+import com.example.movieapp.InputValidation;
+import com.example.movieapp.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -51,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initViews() {
 
 
-        //container=findViewById(R.id.container);
         textInputLayoutEmail = findViewById(R.id.textInputLayoutEmail);
         textInputLayoutPassword =  findViewById(R.id.textInputLayoutPassword);
 
@@ -90,6 +92,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.appCompatButtonLogin:
+                SharedPreferences prefe = getSharedPreferences("Alma",Context.MODE_PRIVATE);
+                SharedPreferences.Editor edti = prefe.edit();
+                edti.putString("EMAIL", textInputEditTextEmail.getText().toString());
+                edti.commit();
                 verifyFromSQLite();
                 break;
             case R.id.textViewLinkRegister:
@@ -118,16 +124,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 , textInputEditTextPassword.getText().toString().trim())) {
 
 
-//            Intent accountsIntent = new Intent(activity, Homepage.class);
-//            accountsIntent.putExtra("EMAIL", textInputEditTextEmail.getText().toString().trim());
-//            emptyInputEditText();
-//            startActivity(accountsIntent);
+         Intent accountsIntent = new Intent(activity, HomeActivity.class);
+
+            SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor edt = pref.edit();
+            edt.putString("EMAIL",textInputEditTextEmail.getText().toString());
+            Log.i("message",textInputEditTextEmail.getText().toString());
+            edt.apply();
+
+           startActivity(accountsIntent);
 
 
 
         } else {
-            // Snack Bar to show success message that record is wrong
-           // Snackbar.make(container, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
+          //nem sikeres
         }
     }
 

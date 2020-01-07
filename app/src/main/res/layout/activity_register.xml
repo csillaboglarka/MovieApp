@@ -6,7 +6,7 @@
     android:background="@color/colorBackground"
     android:orientation="vertical"
     android:id="@+id/container"
-    tools:context=".RegisterActivity">
+    tools:context=".Activities.RegisterActivity">
 
 <com.google.android.material.textfield.TextInputLayout
     android:id="@+id/textInputLayoutName"

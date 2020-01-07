@@ -184,12 +184,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // selection argument
         String[] selectionArgs = {email};
 
-        // query user table with condition
-        /**
-         * Here query function is used to fetch records from user table this function works like we use sql query.
-         * SQL query equivalent to this query function is
-         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com';
-         */
         Cursor cursor = db.query(TABLE_USER, //Table to query
                 columns,                    //columns to return
                 selection,                  //columns for the WHERE clause
@@ -228,12 +222,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // selection arguments
         String[] selectionArgs = {email, password};
 
-        // query user table with conditions
-        /**
-         * Here query function is used to fetch records from user table this function works like we use sql query.
-         * SQL query equivalent to this query function is
-         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com' AND user_password = 'qwerty';
-         */
+
         Cursor cursor = db.query(TABLE_USER, //Table to query
                 columns,                    //columns to return
                 selection,                  //columns for the WHERE clause
@@ -251,5 +240,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return false;
+    }
+
+    public ArrayList<String> getDatas(String email) {
+        ArrayList<String> datas = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor result = db.rawQuery("SELECT* FROM " + TABLE_USER + " WHERE " + COLUMN_USER_EMAIL + "=?", new String[]{email});
+        if (result.moveToFirst()) {
+            datas.add(result.getString(result.getColumnIndex(COLUMN_USER_NAME)));
+            datas.add(result.getString(result.getColumnIndex(COLUMN_USER_EMAIL)));
+            datas.add(result.getString(result.getColumnIndex(COLUMN_USER_PASSWORD)));
+            return datas;
+        }
+        return null;
+    }
+
+    public int updatePassword(String email,String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_PASSWORD, password);
+        return db.update(TABLE_USER, values, COLUMN_USER_EMAIL+ " = ?",
+                new String[] {email});
     }
 }
